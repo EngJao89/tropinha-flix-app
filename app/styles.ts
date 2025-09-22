@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.gray_900,
     flex: 1,
     paddingTop: 24,
+    paddingHorizontal: 14,
   },
   searchContainer: {
     flexDirection: 'row',
