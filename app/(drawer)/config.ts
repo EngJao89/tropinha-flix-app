@@ -6,8 +6,8 @@ export const drawerConfig = {
       icon: 'home',
     },
     {
-      name: 'favorites',
-      title: 'Favoritos',
+      name: 'Movies',
+      title: 'Movies',
       icon: 'heart',
     },
   ],
