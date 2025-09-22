@@ -10,7 +10,7 @@ import { Header } from '../../components/Header';
 import { deleteMovie, getMoviesSave } from '../../utils/storage';
 import { styles } from './styles';
 
-export function Movies() {
+export default function Movies() {
   const isFocused = useIsFocused();
 
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -42,7 +42,7 @@ export function Movies() {
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
-      <Header title="Meus Filmes" />
+      <Header title="Quero Assistir" />
 
       <FlatList
         showsVerticalScrollIndicator={false}
