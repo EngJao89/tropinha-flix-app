@@ -28,7 +28,8 @@ export const styles = StyleSheet.create({
     borderRadius: 6,
   },
   sliderMovie: {
-    height: 250,
+    height: 280, // Aumentado de 250 para 280
     padding: 14,
+    paddingBottom: 20, // Adicionado padding inferior extra
   },
 });
