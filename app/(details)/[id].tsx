@@ -2,16 +2,16 @@
 import { Feather, FontAwesome, Fontisto, MaterialCommunityIcons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { Alert, FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, FlatList, Image, Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import { Movie } from "@/@types/movies";
 import api, { key } from "@/lib/api";
 import { deleteMovie, hasMovie, saveMovie } from '@/utils/storage';
 
 import { Genres } from "@/components/Genres";
+import { ModalLink } from "@/components/ModalLink";
 import { Colors } from "@/constants/theme";
 import { styles } from "./styles";
-
 
 export default function Details() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -133,6 +133,14 @@ export default function Details() {
         <Text style={styles.title}>Descrição</Text>
         <Text style={styles.description}>{movie?.overview}</Text>
       </ScrollView>
+
+      <Modal animationType="slide" transparent={true} visible={openLink}>
+        <ModalLink
+          link={(movie as any)?.homepage || ''}
+          title={movie?.title || ''}
+          closeModal={() => setOpenLink(false)}
+        />
+      </Modal>
     </View>
   );
 }
