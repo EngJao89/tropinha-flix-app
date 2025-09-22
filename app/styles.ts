@@ -26,7 +26,6 @@ export const styles = StyleSheet.create({
   banner: {
     height: 150,
     borderRadius: 6,
-    marginHorizontal: 14,
   },
   sliderMovie: {
     height: 250,
