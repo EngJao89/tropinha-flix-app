@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 interface Movie {
   id: number;
   title: string;
-  [key: string]: any;
+  [key: string]: any; // Pode-se adicionar outras propriedades conforme necessário
 }
 
 export async function getMoviesSave(key: string): Promise<Movie[]> {

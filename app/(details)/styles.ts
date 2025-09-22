@@ -1,0 +1,82 @@
+import { Colors, Fonts_Sizes } from '@/constants/theme';
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.gray_900,
+  },
+  header: {
+    zIndex: 99,
+    position: 'absolute',
+    top: 35,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 4,
+  },
+  headerButton: {
+    width: 46,
+    height: 48,
+    backgroundColor: Colors.gray_700,
+    borderRadius: 23,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  banner: {
+    width: '100%',
+    height: 350,
+    borderBottomLeftRadius: 70,
+    borderBottomRightRadius: 70,
+  },
+  buttonLink: {
+    backgroundColor: Colors.secondary_400,
+    width: 63,
+    height: 63,
+    borderRadius: 35,
+    position: 'absolute',
+    top: 300,
+    right: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 99,
+  },
+  title: {
+    color: Colors.white,
+    fontSize: Fonts_Sizes.LG,
+    fontWeight: 'bold',
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 14,
+    paddingRight: 14,
+    marginTop: 8,
+  },
+  contentArea: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 14,
+    paddingRight: 14,
+    justifyContent: 'flex-start',
+  },
+  rate: {
+    color: Colors.white,
+    fontSize: Fonts_Sizes.MD,
+    fontWeight: 'bold',
+    marginLeft: 4,
+  },
+  description: {
+    paddingBottom: 30,
+    paddingLeft: 14,
+    paddingRight: 14,
+    color: Colors.white,
+    lineHeight: 20,
+  },
+  listGenres: {
+    paddingLeft: 14,
+    marginTop: 8,
+    marginBottom: 8,
+    maxHeight: 35,
+    minHeight: 35,
+  },
+});

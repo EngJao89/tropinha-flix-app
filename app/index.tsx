@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
@@ -80,8 +81,6 @@ export default function Index() {
     };
   }, []);
 
-  console.log(bannerMovie);
-
   return (
     <View style={styles.container}>
       <Header title="Tropinha Flix" />
@@ -100,7 +99,7 @@ export default function Index() {
         {bannerMovie && (
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={() => {}}>
+            onPress={() => router.push(`/(details)/${bannerMovie.id}`)}>
             <Image
               source={{
                 uri: `https://image.tmdb.org/t/p/original/${bannerMovie.poster_path}`,
