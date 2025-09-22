@@ -7,10 +7,10 @@ import { FlatList, View } from 'react-native';
 import { Movie } from '@/@types/movies';
 import { FavoriteItem } from '../../components/FavoriteItem';
 import { Header } from '../../components/Header';
-import { deleteMovie, getMoviesSave } from '../../utils/storage';
+import { deleteWatchedMovie, getWatchedMovies } from '../../utils/storage';
 import { styles } from './styles';
 
-export default function Movies() {
+export default function Watch() {
   const isFocused = useIsFocused();
 
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -18,15 +18,15 @@ export default function Movies() {
   useEffect(() => {
     let isActive = true;
 
-    async function getFavoriteMovies() {
-      const result = await getMoviesSave('@tropinhaflix');
+    async function getWatchedMoviesList() {
+      const result = await getWatchedMovies('@tropinhaflix_watched');
       if (isActive) {
         setMovies(result as unknown as Movie[]);
       }
     }
 
     if (isActive) {
-      getFavoriteMovies();
+      getWatchedMoviesList();
     }
 
     return () => {
@@ -35,14 +35,14 @@ export default function Movies() {
   }, [isFocused]);
 
   async function handleDelete(id: number) {
-    const result = await deleteMovie(id);
+    const result = await deleteWatchedMovie(id);
     setMovies(result as unknown as Movie[]);
   }
 
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
-      <Header title="Quero Assistir" />
+      <Header title="Já Assistido" />
 
       <FlatList
         showsVerticalScrollIndicator={false}

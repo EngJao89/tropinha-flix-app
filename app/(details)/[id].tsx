@@ -5,7 +5,7 @@ import { Alert, FlatList, Image, Modal, ScrollView, Text, TouchableOpacity, View
 
 import { Movie } from "@/@types/movies";
 import api, { key } from "@/lib/api";
-import { deleteMovie, hasMovie, saveMovie } from '@/utils/storage';
+import { deleteMovie, deleteWatchedMovie, hasMovie, hasWatchedMovie, saveMovie, saveWatchedMovie } from '@/utils/storage';
 
 import { Genres } from "@/components/Genres";
 import { ModalLink } from "@/components/ModalLink";
@@ -17,6 +17,7 @@ export default function Details() {
   const [movie, setMovie] = useState<Partial<Movie>>({});
   const [openLink, setOpenLink] = useState(false);
   const [favoritedMovie, setFavoritedMovie] = useState(false);
+  const [watchedMovie, setWatchedMovie] = useState(false);
 
   useEffect(() => {
     let isActive = true;
@@ -36,7 +37,9 @@ export default function Details() {
           setMovie(response.data);
 
           const isFavorite = await hasMovie(response.data);
+          const isWatched = await hasWatchedMovie(response.data);
           setFavoritedMovie(isFavorite);
+          setWatchedMovie(isWatched);
         }
       } catch (err) {
         console.log(err);
@@ -66,9 +69,33 @@ export default function Details() {
         setFavoritedMovie(false);
         Alert.alert('Filme removido da sua lista');
       } else {
-        await saveMovie('@cineprime', { ...movie, id: Number(movie.id) } as any);
+        await saveMovie('@tropinhaflix', { ...movie, id: Number(movie.id) } as any);
         setFavoritedMovie(true);
         Alert.alert('Filme salvo na sua lista!');
+      }
+    } else {
+      console.error('O objeto do filme não está completo');
+      return;
+    }
+  }
+
+  async function handleWatchedMovie(movie: Partial<Movie>) {
+    if (
+      movie.id &&
+      movie.title &&
+      movie.poster_path &&
+      movie.overview &&
+      movie.release_date &&
+      movie.vote_average !== undefined
+    ) {
+      if (watchedMovie) {
+        await deleteWatchedMovie(Number(movie.id));
+        setWatchedMovie(false);
+        Alert.alert('Filme removido da lista de assistidos');
+      } else {
+        await saveWatchedMovie('@tropinhaflix_watched', { ...movie, id: Number(movie.id) } as any);
+        setWatchedMovie(true);
+        Alert.alert('Filme marcado como assistido!');
       }
     } else {
       console.error('O objeto do filme não está completo');
@@ -85,15 +112,28 @@ export default function Details() {
           style={styles.headerButton}>
           <Feather name="arrow-left" size={24} color={Colors.white} />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => handlefavoriteMovie(movie)}
-          style={styles.headerButton}>
-          {favoritedMovie ? (
-            <Fontisto name="bookmark-alt" size={24} color={Colors.white} />
-          ) : (
-            <Fontisto name="bookmark" size={24} color={Colors.white} />
-          )}
-        </TouchableOpacity>
+        
+        <View style={styles.headerButtons}>
+          <TouchableOpacity
+            onPress={() => handlefavoriteMovie(movie)}
+            style={styles.headerButton}>
+            {favoritedMovie ? (
+              <Fontisto name="bookmark-alt" size={24} color={Colors.white} />
+            ) : (
+              <Fontisto name="bookmark" size={24} color={Colors.white} />
+            )}
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => handleWatchedMovie(movie)}
+            style={styles.headerButton}>
+            {watchedMovie ? (
+              <FontAwesome name="check-circle" size={24} color={Colors.green_2} />
+            ) : (
+              <FontAwesome name="circle" size={24} color={Colors.white} />
+            )}
+          </TouchableOpacity>
+        </View>
       </View>
 
       <Image
