@@ -1,4 +1,3 @@
-
 import { Feather, FontAwesome, Fontisto, MaterialCommunityIcons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -87,7 +86,7 @@ export default function Details() {
           <Feather name="arrow-left" size={24} color={Colors.white} />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={() => handlefavoriteMovie(movie)}
           style={styles.headerButton}>
           {favoritedMovie ? (
             <Fontisto name="bookmark-alt" size={24} color={Colors.white} />
