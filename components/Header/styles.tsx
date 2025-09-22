@@ -5,7 +5,9 @@ export const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 32,
+    paddingTop: 32,
+    paddingLeft: 32,
+    paddingRight: 32,
   },
   drawerButton: {
     height: 70,

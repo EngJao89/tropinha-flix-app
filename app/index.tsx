@@ -124,6 +124,38 @@ export default function Index() {
             keyExtractor={item => String(item.id)}
           />
         </View>
+
+        <Text style={styles.title}>Populares</Text>
+
+        <View style={styles.sliderMovie}>
+          <FlatList
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={popularMovies}
+            renderItem={({item}) => (
+              <SliderItem
+                data={item}
+                navigatePage={() => router.push(`/(details)/${item.id}`)}
+              />
+            )}
+            keyExtractor={item => String(item.id)}
+          />
+        </View>
+
+        <Text style={styles.title}>Mais Votados</Text>
+
+        <FlatList
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          data={topMovies}
+          renderItem={({item}) => (
+            <SliderItem
+              data={item}
+              navigatePage={() => router.push(`/(details)/${item.id}`)}
+            />
+          )}
+          keyExtractor={item => String(item.id)}
+        />
       </ScrollView>
     </View>
   );
