@@ -3,6 +3,7 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '
 import { StyleSheet, Text, View } from 'react-native';
 
 import Movies from '@/app/(movies)/page';
+import Watch from '@/app/(watch)/page';
 import IndexScreen from './index';
 
 const Drawer = createDrawerNavigator();
@@ -51,6 +52,14 @@ export default function DrawerLayout() {
         options={{ 
           drawerLabel: 'Quero Assistir',
           title: 'Quero Assistir'
+        }} 
+      />
+      <Drawer.Screen 
+        name="watch" 
+        component={Watch}
+        options={{ 
+          drawerLabel: 'Já Assistido',
+          title: 'Já Assistido'
         }} 
       />
     </Drawer.Navigator>

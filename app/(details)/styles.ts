@@ -24,6 +24,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  headerButtons: {
+    flexDirection: 'row',
+    gap: 8,
+  },
   banner: {
     width: '100%',
     height: 350,

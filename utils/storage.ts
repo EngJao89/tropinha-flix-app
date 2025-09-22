@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 interface Movie {
   id: number;
   title: string;
-  [key: string]: any; // Pode-se adicionar outras propriedades conforme necessário
+  [key: string]: any;
 }
 
 export async function getMoviesSave(key: string): Promise<Movie[]> {
@@ -30,20 +30,54 @@ export async function saveMovie(key: string, newMovie: Movie): Promise<void> {
 }
 
 export async function deleteMovie(id: number): Promise<Movie[]> {
-  let moviesStored = await getMoviesSave('@cineprime');
+  let moviesStored = await getMoviesSave('@tropinhaflix');
 
   let myMovies = moviesStored.filter(item => item.id !== id);
 
-  await AsyncStorage.setItem('@cineprime', JSON.stringify(myMovies));
+  await AsyncStorage.setItem('@tropinhaflix', JSON.stringify(myMovies));
   console.log('Filme deletado com sucesso!');
 
   return myMovies;
 }
 
 export async function hasMovie(movie: Movie): Promise<boolean> {
-  let moviesStored = await getMoviesSave('@cineprime');
+  let moviesStored = await getMoviesSave('@tropinhaflix');
 
   const hasMovies = moviesStored.some(item => item.id === movie.id);
 
+  return hasMovies;
+}
+
+export async function getWatchedMovies(key: string): Promise<Movie[]> {
+  const myMovies = await AsyncStorage.getItem(key);
+  let moviesSave: Movie[] = myMovies ? JSON.parse(myMovies) : [];
+  return moviesSave;
+}
+
+export async function saveWatchedMovie(key: string, newMovie: Movie): Promise<void> {
+  let moviesStored = await getWatchedMovies(key);
+  const hasMovies = moviesStored.some(item => item.id === newMovie.id);
+
+  if (hasMovies) {
+    console.log('Esse filme já existe na sua lista de assistidos');
+    return;
+  }
+
+  moviesStored.push(newMovie);
+  await AsyncStorage.setItem(key, JSON.stringify(moviesStored));
+  console.log('Filme marcado como assistido!');
+}
+
+export async function deleteWatchedMovie(id: number): Promise<Movie[]> {
+  let moviesStored = await getWatchedMovies('@tropinhaflix_watched');
+  let myMovies = moviesStored.filter(item => item.id !== id);
+  await AsyncStorage.setItem('@tropinhaflix_watched', JSON.stringify(myMovies));
+  console.log('Filme removido da lista de assistidos!');
+  return myMovies;
+}
+
+export async function hasWatchedMovie(movie: Movie): Promise<boolean> {
+  let moviesStored = await getWatchedMovies('@tropinhaflix_watched');
+  const hasMovies = moviesStored.some(item => item.id === movie.id);
   return hasMovies;
 }
