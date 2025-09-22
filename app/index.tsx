@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import { Movie } from "@/@types/movies";
 import api, { key } from "@/lib/api";
@@ -8,6 +8,7 @@ import { styles } from "./styles";
 
 import { Header } from "@/components/Header";
 import { Input } from "@/components/Input";
+import { SliderItem } from "@/components/SliderItem";
 import { getListMovies, randomBanner } from "@/utils/movies";
 
 export default function Index() {
@@ -108,6 +109,21 @@ export default function Index() {
             />
           </TouchableOpacity>
         )}
+
+        <View style={styles.sliderMovie}>
+          <FlatList
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={nowMovies}
+            renderItem={({item}) => (
+              <SliderItem
+                data={item}
+                navigatePage={() => router.push(`/(details)/${item.id}`)}
+              />
+            )}
+            keyExtractor={item => String(item.id)}
+          />
+        </View>
       </ScrollView>
     </View>
   );
