@@ -2,7 +2,7 @@ import { Colors } from '@/constants/theme';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { Movies } from '@/app/(movies)/page';
+import Movies from '@/app/(movies)/page';
 import IndexScreen from './index';
 
 const Drawer = createDrawerNavigator();
@@ -49,8 +49,8 @@ export default function DrawerLayout() {
         name="movies" 
         component={Movies}
         options={{ 
-          drawerLabel: 'Meus Filmes',
-          title: 'Meus Filmes'
+          drawerLabel: 'Quero Assistir',
+          title: 'Quero Assistir'
         }} 
       />
     </Drawer.Navigator>
