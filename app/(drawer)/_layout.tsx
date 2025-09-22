@@ -2,7 +2,7 @@ import { Colors } from '@/constants/theme';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { StyleSheet, Text, View } from 'react-native';
 
-import FavoritesScreen from './favorites';
+import { Movies } from '@/app/(movies)/page';
 import IndexScreen from './index';
 
 const Drawer = createDrawerNavigator();
@@ -46,11 +46,11 @@ export default function DrawerLayout() {
         }} 
       />
       <Drawer.Screen 
-        name="favorites" 
-        component={FavoritesScreen}
+        name="movies" 
+        component={Movies}
         options={{ 
-          drawerLabel: 'Favoritos',
-          title: 'Favoritos'
+          drawerLabel: 'Meus Filmes',
+          title: 'Meus Filmes'
         }} 
       />
     </Drawer.Navigator>
