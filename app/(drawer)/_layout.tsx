@@ -1,5 +1,5 @@
 import { Colors } from '@/constants/theme';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { StyleSheet, Text, View } from 'react-native';
 
 import Movies from '@/app/(movies)/page';
@@ -8,7 +8,7 @@ import IndexScreen from './index';
 
 const Drawer = createDrawerNavigator();
 
-function CustomDrawerContent(props: any) {
+function CustomDrawerContent(props: DrawerContentComponentProps) {
   return (
     <View style={styles.drawerContainer}>
       <View style={styles.drawerHeader}>
