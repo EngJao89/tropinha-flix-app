@@ -8,4 +8,10 @@ export const styles = StyleSheet.create({
     paddingTop: 4,
     paddingBottom: 4,
   },
+  loadingText: {
+    color: Colors.white,
+    textAlign: 'center',
+    marginTop: 20,
+    fontSize: 16,
+  },
 });
