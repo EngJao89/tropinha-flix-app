@@ -1,19 +1,13 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { Text, TouchableOpacity, View } from 'react-native';
 
+import { Movie } from '@/@types/movies';
 import { Colors } from '@/constants/theme';
 import { styles } from './styles';
 
-interface Movie {
-  id: number;
-  title: string;
-  vote_average: number;
-  [key: string]: any;
-}
-
 interface FavoriteItemProps {
   data: Movie;
-  deleteMovie: (id: number) => void;
+  deleteMovie: (id: string) => void;
   navigatePage: (movie: Movie) => void;
 }
 
@@ -21,7 +15,7 @@ export function FavoriteItem({
   data,
   deleteMovie,
   navigatePage,
-}: FavoriteItemProps) {
+}: Readonly<FavoriteItemProps>) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{data.title}</Text>

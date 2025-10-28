@@ -1,10 +1,5 @@
+import { Movie } from '@/@types/movies';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-interface Movie {
-  id: number;
-  title: string;
-  [key: string]: any;
-}
 
 export async function getMoviesSave(key: string): Promise<Movie[]> {
   const myMovies = await AsyncStorage.getItem(key);
@@ -29,7 +24,7 @@ export async function saveMovie(key: string, newMovie: Movie): Promise<void> {
   console.log('Filme salvo com sucesso!!');
 }
 
-export async function deleteMovie(id: number): Promise<Movie[]> {
+export async function deleteMovie(id: string): Promise<Movie[]> {
   let moviesStored = await getMoviesSave('@tropinhaflix');
 
   let myMovies = moviesStored.filter(item => item.id !== id);
@@ -49,9 +44,7 @@ export async function hasMovie(movie: Movie): Promise<boolean> {
 }
 
 export async function getWatchedMovies(key: string): Promise<Movie[]> {
-  const myMovies = await AsyncStorage.getItem(key);
-  let moviesSave: Movie[] = myMovies ? JSON.parse(myMovies) : [];
-  return moviesSave;
+  return getMoviesSave(key);
 }
 
 export async function saveWatchedMovie(key: string, newMovie: Movie): Promise<void> {
@@ -68,7 +61,7 @@ export async function saveWatchedMovie(key: string, newMovie: Movie): Promise<vo
   console.log('Filme marcado como assistido!');
 }
 
-export async function deleteWatchedMovie(id: number): Promise<Movie[]> {
+export async function deleteWatchedMovie(id: string): Promise<Movie[]> {
   let moviesStored = await getWatchedMovies('@tropinhaflix_watched');
   let myMovies = moviesStored.filter(item => item.id !== id);
   await AsyncStorage.setItem('@tropinhaflix_watched', JSON.stringify(myMovies));
