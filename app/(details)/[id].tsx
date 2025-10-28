@@ -65,7 +65,7 @@ export default function Details() {
       movie.vote_average !== undefined
     ) {
       if (favoritedMovie) {
-        await deleteMovie(Number(movie.id));
+        await deleteMovie(String(movie.id));
         setFavoritedMovie(false);
         Alert.alert('Filme removido da sua lista');
       } else {
@@ -89,7 +89,7 @@ export default function Details() {
       movie.vote_average !== undefined
     ) {
       if (watchedMovie) {
-        await deleteWatchedMovie(Number(movie.id));
+        await deleteWatchedMovie(String(movie.id));
         setWatchedMovie(false);
         Alert.alert('Filme removido da lista de assistidos');
       } else {

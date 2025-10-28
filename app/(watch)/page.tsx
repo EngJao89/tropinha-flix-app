@@ -1,61 +1,68 @@
-import { useIsFocused } from '@react-navigation/native';
-import { router } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import { FlatList, Text, View } from "react-native";
 
-import { Movie } from '@/@types/movies';
-import { FavoriteItem } from '../../components/FavoriteItem';
-import { Header } from '../../components/Header';
-import { deleteWatchedMovie, getWatchedMovies } from '../../utils/storage';
-import { styles } from './styles';
+import { Movie } from "@/@types/movies";
+import { useMovieStorage } from '@/hooks/useMovieStorage';
+
+import { FavoriteItem } from "@/components/FavoriteItem";
+import { Header } from "@/components/Header";
+import { styles } from "./styles";
 
 export default function Watch() {
-  const isFocused = useIsFocused();
-
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  const { getWatched, removeFromWatched } = useMovieStorage();
 
   useEffect(() => {
     let isActive = true;
 
-    async function getWatchedMoviesList() {
-      const result = await getWatchedMovies('@tropinhaflix_watched');
+    async function getMovies() {
+      const result = await getWatched();
       if (isActive) {
-        setMovies(result as unknown as Movie[]);
+        setMovies(result);
+        setLoading(false);
       }
     }
 
-    if (isActive) {
-      getWatchedMoviesList();
-    }
+    getMovies();
 
     return () => {
       isActive = false;
     };
-  }, [isFocused]);
+  }, [getWatched]);
 
-  async function handleDelete(id: number) {
-    const result = await deleteWatchedMovie(id);
-    setMovies(result as unknown as Movie[]);
+  async function handleDelete(id: string) {
+    const result = await removeFromWatched(id);
+    setMovies(result);
+  }
+
+  function handleNavigate(movie: Movie) {
+    router.push(`/(details)/${movie.id}`);
   }
 
   return (
     <View style={styles.container}>
-      <StatusBar style="light" />
-      <Header title="Já Assistido" />
-
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={movies}
-        keyExtractor={item => String(item.id)}
-        renderItem={ ({ item }) => (
-          <FavoriteItem
-            data={item as any}
-            deleteMovie={handleDelete}
-            navigatePage={() => router.push(`/(details)/${item.id}`)}
-          />
-        )}
-      />
+      <Header title="Filmes assistidos" />
+      
+      {loading ? (
+        <Text style={styles.loadingText}>Carregando filmes...</Text>
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={movies}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => (
+            <FavoriteItem
+              data={item}
+              deleteMovie={handleDelete}
+              navigatePage={handleNavigate}
+            />
+          )}
+        />
+      )}
     </View>
   );
 }

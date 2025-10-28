@@ -34,7 +34,7 @@ export default function Movies() {
     };
   }, [isFocused]);
 
-  async function handleDelete(id: number) {
+  async function handleDelete(id: string) {
     const result = await deleteMovie(id);
     setMovies(result as unknown as Movie[]);
   }
